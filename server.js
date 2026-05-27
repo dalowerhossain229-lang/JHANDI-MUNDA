@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 });
 
 // 🎰 [উইনগো কালার ট্রেড ওরিজিনাল ডোমেইন সিঙ্ক]
-const MAIN_SITE_URL = "https://onrender.com"; 
+const MAIN_SITE_URL = "https://betlover247.onrender.com"; 
 
 // 🎲 ঝান্ডি মুন্ডা ওরিজিনাল ৬টি নিয়ন প্রতীকের মূল পুল ভাই ভাই
 const jhandiSymbolsPool = ["HEART", "SPADE", "DIAMOND", "CLUB", "CROWN", "FLAG"];
