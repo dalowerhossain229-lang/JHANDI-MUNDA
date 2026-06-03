@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JHANDI MUNDA - ROYAL DICE ARENA</title>
+    <style>
+        /* 🎨 স্পীড অপ্টিমাইজড কোর সিএসএস ফ্রেম ইনজেকশন ভাই ভাই */
+        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #060a12; font-family: sans-serif; color: #fff; -webkit-tap-highlight-color: transparent; user-select: none; }
+        .header { display: none !important; } /* ডাবল ব্যালেন্স বক্স জ্যাম ব্লকার */
+        
+        body { 
+            background: radial-gradient(circle at center, #101626 0%, #060a12 100%); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            height: 100vh; 
+            position: relative;
+        }
+        
+        /* 🏟️ ওরিজিনাল bg.png চাদর সিঙ্ক */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%; height: 100%; top: 0; left: 0;
+            background: url('bg.png') no-repeat center center/cover;
+            opacity: 0.14; z-index: 0; pointer-events: none;
+        }
+        
+        /* 🎲 ৬-ডাইস নিয়ন বোর্ডার শোডাউন গ্রিড জোন */
+        .dice-board-zone { position: relative; z-index: 5; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; max-width: 450px; margin: 10px auto 0 auto; width: calc(100% - 30px); }
+        .dice-slot-node { background: rgba(13, 19, 33, 0.85); border: 1px solid rgba(255,255,255,0.04); border-radius: 14px; min-height: 85px; display: flex; justify-content: center; align-items: center; box-shadow: inset 0 0 15px rgba(0,0,0,0.6); position: relative; }
+        .dice-img-frame { width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; }
+        .dice-img-frame img { width: 100%; height: 100%; object-fit: contain; display: block; }
+        
+        /* 🎰 ঘূর্ণন এনিমেশন ইফেক্ট বর্ম */
+        .dice-rolling-active { animation: diceShake 0.12s infinite linear; }
+        @keyframes diceShake { 0% { transform: translate(2px, 1px) rotate(0deg); } 10% { transform: translate(-1px, -2px) rotate(-2deg); } 20% { transform: translate(-3px, 0px) rotate(3deg); } 30% { transform: translate(0px, 2px) rotate(0deg); } 40% { transform: translate(1px, -1px) rotate(1deg); } 50% { transform: translate(-1px, 2px) rotate(-1deg); } 60% { transform: translate(-3px, 1px) rotate(0deg); } 70% { transform: translate(2px, 1px) rotate(-2deg); } 80% { transform: translate(-1px, -1px) rotate(4deg); } 90% { transform: translate(2px, 2px) rotate(0deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
+
+        /* 💸 বাজি ধরার প্রধান ৬টি নিয়ন প্রতীক গ্রিড বোর্ড */
+        .betting-board { position: relative; z-index: 5; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 5px 12px; max-width: 450px; margin: 0 auto; width: calc(100% - 24px); }
+        .bet-board-btn { background: linear-gradient(180deg, #151d30 0%, #0d1321 100%); border: 2px solid #222d44; border-radius: 12px; padding: 10px 2px; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s ease; }
+        .board-label { font-size: 10px; font-weight: 900; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.3px; }
+        .board-icon-mini { width: 25px; height: 25px; object-fit: contain; }
+        .bet-board-btn.active-side-bet { border-color: #ffaa00 !important; background: linear-gradient(180deg, #2a2113 0%, #151007 100%) !important; box-shadow: 0 0 12px rgba(255,170,0,0.35) !important; }
+        
+        /* 📢 লাইভ মেসেজ প্যানেল বার */
+        .win-status-container { position: relative; z-index: 5; text-align: center; padding: 10px; margin: 5px 12px; background: rgba(9, 13, 23, 0.6); border-radius: 8px; border: 1px solid rgba(255,255,255,0.02); }
+        #win-text-msg { font-size: 11px; font-weight: 700; color: #ffaa00; letter-spacing: 0.2px; }
+        
+        /* 🎛️ ফুটার জোন */
+        .footer-controls { position: relative; z-index: 10; background: #070a12; border-top: 1px solid #161f33; padding: 10px 15px 22px 15px; box-shadow: 0 -5px 20px rgba(0,0,0,0.6); }
+        .play-section { display: flex; justify-content: space-between; align-items: center; gap: 8px; max-width: 450px; margin: 0 auto; }
+        .bet-btn-nav { background: #12192c; border: 1px solid #222f52; color: #ffaa00; font-size: 18px; font-weight: 800; width: 38px; height: 38px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .play-btn { flex: 1; background: linear-gradient(180deg, #ffbb00 0%, #d48800 100%); color: #000; font-size: 14px; font-weight: 900; border: none; padding: 11px 0; border-radius: 10px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 10px rgba(212,136,0,0.3); }
+        .play-btn:disabled { background: #151a26 !important; color: #444e66 !important; box-shadow: none !important; cursor: not-allowed; }
+        .icon-btn { background: #12192c; border: 1px solid #222f52; width: 38px; height: 38px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #ffaa00; font-weight: bold; }
+        .icon-btn.active { background: #ffaa00; color: #000; box-shadow: 0 0 10px rgba(255,170,0,0.4); }
+        
+        .win-glow-bar { border-color: rgba(0, 255, 136, 0.4) !important; background: rgba(0, 255, 136, 0.05) !important; }
+        .win-glow-bar #win-text-msg { color: #00ff88 !important; }
+        .lose-glow-bar { border-color: rgba(255, 51, 102, 0.4) !important; background: rgba(255, 51, 102, 0.05) !important; }
+        .lose-glow-bar #win-text-msg { color: #ff3366 !important; }
+    </style>
+</head>
+<body>
+
+    <div class="header" style="display:none !important;">
+        <div class="balance-box">৳ <span id="user-balance">0.00</span></div>
+    </div>
+
+    <!-- 🎲 গেমের শুরুতে ওরিজিনাল ক্যাসিনো স্ট্যান্ডার্ড অনুযায়ী ৬টি ফাঁকা ছক্কা (dice_blank.png) রেন্ডার লক ভাই ভাই! -->
+    <div class="dice-board-zone">
+        <div class="dice-slot-node"><div class="dice-img-frame" id="dice-0"><img src="dice_blank.png"></div></div>
+        <div class="dice-slot-node"><div class="dice-img-frame" id="dice-1"><img src="dice_blank.png"></div></div>
+        <div class="dice-slot-node"><div class="dice-img-frame" id="dice-2"><img src="dice_blank.png"></div></div>
+        <div class="dice-slot-node"><div class="dice-img-frame" id="dice-3"><img src="dice_blank.png"></div></div>
+        <div class="dice-slot-node"><div class="dice-img-frame" id="dice-4"><img src="dice_blank.png"></div></div>
+        <div class="dice-slot-node"><div class="dice-img-frame" id="dice-5"><img src="dice_blank.png"></div></div>
+    </div>
+
+    <!-- 💸 বাজি ধরার প্রধান ৬টি প্রতীক বাটন চ্যাম (আপনার গিটহাবের ওরিজিনাল একক বচন ফাইল নামের সাথে ১০০% সিঙ্ক লক ওস্তাদ!) -->
+    <div class="betting-board">
+        <button class="bet-board-btn" id="board-FLAG" onclick="selectBetSide('FLAG')">
+            <img src="symbol_FLAG.png" class="board-icon-mini">
+            <span class="board-label">FLAG (ঝান্ডি)</span>
+        </button>
+        <button class="bet-board-btn" id="board-CROWN" onclick="selectBetSide('CROWN')">
+            <img src="symbol_CROWN.png" class="board-icon-mini">
+            <span class="board-label">CROWN (মুন্ডা)</span>
+        </button>
+        <button class="bet-board-btn" id="board-DIAMOND" onclick="selectBetSide('DIAMOND')">
+            <img src="symbol_DIAMOND.png" class="board-icon-mini">
+            <span class="board-label">DIAMOND (ইটা)</span>
+        </button>
+        <button class="bet-board-btn" id="board-HEART" onclick="selectBetSide('HEART')">
+            <img src="symbol_HEART.png" class="board-icon-mini">
+            <span class="board-label">HEART (পান)</span>
+        </button>
+        <button class="bet-board-btn" id="board-CLUB" onclick="selectBetSide('CLUB')">
+            <img src="symbol_CLUB.png" class="board-icon-mini">
+            <span class="board-label">CLUB (चिड़ितन)</span>
+        </button>
+        <button class="bet-board-btn" id="board-SPADE" onclick="selectBetSide('SPADE')">
+            <img src="symbol_SPADE.png" class="board-icon-mini">
+            <span class="board-label">SPADE (ইস্কাবন)</span>
+        </button>
+    </div>
+
+    <div class="win-status-container" id="win-status-box">
+        <span id="win-text-msg">প্রতীক সিলেক্ট করে ROLL বোতাম চাপুন ওস্তাদ!</span>
+    </div>
+
+    <div class="footer-controls">
+        <div class="play-section">
+            <button class="bet-btn-nav" onclick="adjustBet('minus')">-</button>
+            <div style="text-align: center; width: 55px;">
+                <div style="font-size: 8px; color: #aaa; font-weight: bold;">BET</div>
+                <div style="font-size: 14px; font-weight: 900; color: #fff;" id="bet-display">৳50</div>
+            </div>
+            <button class="bet-btn-nav" onclick="adjustBet('plus')">+</button>
+
+            <button class="play-btn" id="spin-btn" onclick="handleJhandiRoll()">ROLL</button>
+            
+            <div class="icon-group">
+                <button class="icon-btn" id="auto-btn" onclick="toggleAuto()">🤖</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlUserId = urlParams.get('userId') || urlParams.get('id') || urlParams.get('username') || "guest_user";
+        const urlWallet = urlParams.get('wallet') || "main";
+        const SERVER_URL = window.location.origin;
+
+        let balance = 0.00;
+        let currentBet = 50;
+        let selectedSide = null;
+        let isSpinning = false;
+        let isAuto = false;
+        let isMuted = false;
+        let autoInterval = null;
+
+        // 🎯 ব্যাকএন্ডের ডাইস নামকে ফ্রন্টএন্ডের ওরিজিনাল একক বচন ফাইলের বানানের সাথে ম্যাচ করানোর ওটিসি চ্যাম
+        const backendToFrontendMapping = {
+            "JHANDI": "FLAG",
+            "MUNDA": "CROWN",
+            "ITTA": "DIAMOND",
+            "PAAN": "HEART",
+            "CHIRITAN": "CLUB",
+            "ISKABON": "SPADE"
+        };
+        const symbolsMappingList = ["FLAG", "CROWN", "DIAMOND", "HEART", "CLUB", "SPADE"];
+
+        function adjustBet(action) {
+            if (isSpinning) return;
+            if (action === 'minus' && currentBet > 50) currentBet -= 50;
+            if (action === 'plus' && currentBet < 20000) currentBet += 50;
+            document.getElementById("bet-display").innerText = `৳${currentBet}`;
+            playAudio('click');
+        }
+
+        function selectBetSide(side) {
+            if (isSpinning) return;
+            selectedSide = side;
+            symbolsMappingList.forEach(s => {
+                const el = document.getElementById(`board-${s}`);
+                if (el) el.classList.remove("active-side-bet");
+            });
+            const activeEl = document.getElementById(`board-${side}`);
+            if (activeEl) activeEl.classList.add("active-side-bet");
+            playAudio('click');
+        }
+
+        // 🎰 [🎰 ৬-ডাইস ওরিজিনাল ইমেজ পাথ সিঙ্ক ঘূর্ণন এনিমেশন ড্রাইভার ভাই ভাই]
+        function animateDiceRolling(serverGameData) {
+            const resultsArray = serverGameData.rolledDiceResults || [];
+            let shuffleTimerTicks = 0;
+
+            const rollShuffleInterval = setInterval(() => {
+                for (let i = 0; i < 6; i++) {
+                    const dFrame = document.getElementById(`dice-${i}`);
+                    if (dFrame) {
+                        dFrame.classList.add("dice-rolling-active");
+                        let randomMockSymbol = symbolsMappingList[Math.floor(Math.random() * 6)];
+                        dFrame.innerHTML = `<img src="symbol_${randomMockSymbol}.png">`;
+                    }
+                }
+                playAudio('spin');
+                shuffleTimerTicks++;
+
+                if (shuffleTimerTicks >= 10) {
+                    clearInterval(rollShuffleInterval);
+                    
+                    for (let i = 0; i < 6; i++) {
+                        const dFrame = document.getElementById(`dice-${i}`);
+                        if (dFrame) {
+                            dFrame.classList.remove("dice-rolling-active");
+                            let backendDiceName = resultsArray[i];
+                            let exactFinalSymbol = backendToFrontendMapping[backendDiceName] || backendDiceName;
+                            
+                            dFrame.innerHTML = `<img src="symbol_${exactFinalSymbol.toUpperCase()}.png" onerror="this.src='dice_blank.png'">`;
+                        }
+                    }
+
+                    showFinalJhandiReward(serverGameData.status, serverGameData.winAmount, serverGameData.matchCount);
+                }
+            }, 120);
+        }
+
+        async function handleJhandiRoll() {
+            if (isSpinning || isSpinning === true) return; 
+            if (!selectedSide) {
+                alert("🔒 বাজি প্লে করার আগে যেকোনো একটি প্রতীক সিলেক্ট করুন ওস্তাদ!");
+                return;
+            }
+
+            isSpinning = true;
+            if (document.getElementById("spin-btn")) document.getElementById("spin-btn").disabled = true;
+            if (document.getElementById("win-status-box")) document.getElementById("win-status-box").className = "win-status-container";
+            if (document.getElementById("win-text-msg")) document.getElementById("win-text-msg").innerText = "🎰 ছক্কা রোল করা হচ্ছে, রিওয়ার্ড গণনার অপেক্ষা ওস্তাদ...";
+            playAudio('click');
+
+            let backendPredictionKey = "JHANDI";
+            Object.keys(backendToFrontendMapping).forEach(key => {
+                if (backendToFrontendMapping[key] === selectedSide) {
+                    backendPredictionKey = key;
+                }
+            });
+
+            try {
+                const response = await fetch(`${SERVER_URL}/api/jhandi-roll`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userId: urlUserId,
+                        amount: parseFloat(currentBet),
+                        wallet: urlWallet,
+                        prediction: backendPredictionKey
+                    })
+                });
+
+                const serverRes = await response.json();
+                
+                if (serverRes.success || serverRes.success === true) {
+                    let parsedLiveBalance = serverRes.balance || serverRes.data?.balance || balance;
+                    balance = parseFloat(parsedLiveBalance);
+                    
+                    if (window.parent) window.parent.postMessage({ action: "refresh_wallet" }, "*");
+                    if (window.top) window.top.postMessage({ action: "refresh_wallet" }, "*");
+                    
+                    let targetGamePayload = serverRes.gameData || serverRes;
+                    animateDiceRolling(targetGamePayload);
+                } else {
+                    alert(serverRes.message || "❌ Insufficient Balance! Please Recharge Wallet.");
+                    stopJhandiState();
+                }
+            } catch (err) {
+                console.log("Jhandi-Munda Core Engine Sync Exception.");
+                stopJhandiState();
+            }
+        }
+
+        function showFinalJhandiReward(status, winAmount, matchCount) {
+            const msgBox = document.getElementById("win-status-box");
+            const textMsg = document.getElementById("win-text-msg");
+            
+            if (status === "win" || matchCount > 0) {
+                playAudio('win');
+                if (msgBox) msgBox.className = "win-status-container win-glow-bar";
+                if (textMsg) textMsg.innerHTML = `🎉 গ্র্যান্ড উইন ওস্তাদ! আপনার প্রতীক <b>${matchCount} বার</b> মিলেছে এবং ওয়ালেটে ৳${winAmount} ক্রেডিট হয়েছে ভাই ভাই!`;
+            } else {
+                playAudio('wheel');
+                if (msgBox) msgBox.className = "win-status-container lose-glow-bar";
+                if (textMsg) textMsg.innerHTML = `💥 ওহ হো লস! এই রাউন্ডে আপনার প্রতীক একটি ছক্কাতেও মেলেনি ভাই ভাই!`;
+            }
+
+            fetchLiveBalance();
+            stopJhandiState();
+
+            if (isAuto) {
+                autoInterval = setTimeout(() => {
+                    if (isAuto) handleJhandiRoll();
+                }, 3500);
+            }
+        }
+
+        if (typeof io !== 'undefined') {
+            const socket = io();
+            socket.on("balanceUpdate", (data) => {
+                if (data && data.username === urlUserId) {
+                    if (window.parent) window.parent.postMessage({ action: "refresh_wallet" }, "*");
+                    fetchLiveBalance();
+                }
+            });
+        }
+
+        async function fetchLiveBalance() {
+            try {
+                const response = await fetch(`${SERVER_URL}/api/jhandi-balance?userId=${urlUserId}&wallet=${urlWallet}`);
+                const serverData = await response.json();
+                if (serverData.success) {
+                    balance = parseFloat(serverData.balance);
+                    if (document.getElementById("user-balance")) {
+                        document.getElementById("user-balance").innerText = balance.toFixed(2);
+                    }
+                }
+            } catch (e) { console.error("Balance synchronization lag tracking"); }
+        }
+
+        window.onload = () => {
+            if (window.parent) window.parent.postMessage({ action: "refresh_wallet" }, "*");
+            fetchLiveBalance();
+        };
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            slotSounds.click.muted = isMuted; slotSounds.spin.muted = isMuted;
+            slotSounds.win.muted = isMuted; slotSounds.wheel.muted = isMuted;
+        }
+
+        function toggleAuto() {
+            isAuto = !isAuto;
+            const autoEl = document.getElementById("auto-btn");
+            if (autoEl) autoEl.classList.toggle('active', isAuto);
+            if (isAuto && !isSpinning) handleJhandiRoll();
+            playAudio('click');
+        }
+
+        function stopJhandiState() {
+            isSpinning = false;
+            if (document.getElementById("spin-btn")) document.getElementById("spin-btn").disabled = false;
+            if (!isAuto && autoInterval) clearTimeout(autoInterval);
+        }
+
+        const slotSounds = {
+            click: new Audio('spin2.mp3'),
+            spin: new Audio('spin2.mp3'),
+            win: new Audio('win2.mp3'),
+            wheel: new Audio('spin2.mp3')
+        };
+        Object.values(slotSounds).forEach(s => s.load());
+
+        function playAudio(type) {
+            try { slotSounds[type].currentTime = 0; slotSounds[type].play(); } catch(e) {}
+        }
+    </script>
+</body>
+</html>
