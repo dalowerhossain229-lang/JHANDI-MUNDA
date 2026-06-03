@@ -1,5 +1,5 @@
 /* ===================================================================================
-   🎲 JHANDI MUNDA - PREMIUM ASIAN DICE KING STYLESHEET (১০০% মোবাইল রেস্পন্সিভ বর্ম)
+   🎲 JHANDI MUNDA - ROYAL DICE CLUB MASTER STYLESHEET (১০০% মোবাইল রেস্পন্সিভ বর্ম)
    =================================================================================== */
 
 html, body {
@@ -8,7 +8,7 @@ html, body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: #05060a;
+    background-color: #060a12;
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     color: #ffffff;
     -webkit-tap-highlight-color: transparent;
@@ -20,12 +20,17 @@ html, body {
     display: none !important;
 }
 
-/* 🏟️ ক্যাসিনো মেইন গোল্ডেন-ডার্ক ক্যাসিনো কাঠের বোর্ড টেবিল ম্যাট সিঙ্ক */
+/* 🏟️ ক্যাসিনো মেইন গোল্ডেন-নিওন ডার্ক টেবিল ম্যাট সিঙ্ক */
 body {
-    background: radial-gradient(circle at center, #0e1222 0%, #05060a 100%);
+    background: radial-gradient(circle at center, #101626 0%, #060a12 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
     position: relative;
 }
 
+/* 🏟️ ওরিজিনাল bg.png ডাইরেক্ট ক্যানভাস রুট পাথ সিঙ্ক চাদর লক */
 body::before {
     content: "";
     position: absolute;
@@ -34,64 +39,91 @@ body::before {
     top: 0;
     left: 0;
     background: url('bg.png') no-repeat center center/cover;
-    opacity: 0.12;
+    opacity: 0.14;
     z-index: 0;
     pointer-events: none;
 }
 
-/* 🎰 ছক্কা রোলিং এরিয়া কন্টেইনার প্যানেল বার */
-.dice-rolling-arena {
+/* 🎲 ৬-ডাইস নিয়ন বোর্ডার শোডাউন গ্রিড জোন এরিয়া ভাই ভাই */
+.dice-board-zone {
     position: relative;
     z-index: 5;
-    padding: 10px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-}
-
-.dice-cup-frame {
-    background: rgba(8, 10, 15, 0.85);
-    border: 1px solid rgba(255,255,255,0.03);
-    border-radius: 16px;
-    padding: 12px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 4px 15px rgba(0,0,0,0.5);
-    width: 90%;
-    max-width: 340px;
+    padding: 15px;
+    max-width: 450px;
+    margin: 15px auto 0 auto;
+    width: calc(100% - 30px);
 }
 
-/* প্রতিটি ডাইস ফেস বক্স কন্টেইনার */
-.dice-box-node {
-    background: #11141e;
-    border: 1px solid #202636;
-    border-radius: 10px;
-    width: 100%;
-    aspect-ratio: 1 / 1;
+.dice-slot-node {
+    background: rgba(13, 19, 33, 0.85);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 16px;
+    min-height: 90px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-    overflow: hidden;
+    align-items: center;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.7), 0 4px 10px rgba(0,0,0,0.3);
+    position: relative;
+    transition: all 0.2s ease;
 }
 
-/* 🎰 ৬টি চিহ্নে বাজি ধরার প্রধান রেস্পন্সিভ গ্রিড লেআউট ভাই ভাই */
-.betting-board-grid {
+.dice-img-frame {
+    width: 65px;
+    height: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.1s ease;
+}
+
+.dice-img-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6));
+}
+
+/* 🎰 ছক্কা রোল হওয়ার থ্রিডি ঘূর্ণন কাঁপানো এনিমেশন বর্ম ওস্তাদ ভাই ভাই */
+.dice-rolling-active {
+    animation: diceShake 0.12s infinite linear;
+}
+
+@keyframes diceShake {
+    0% { transform: translate(2px, 1px) rotate(0deg) scale(1.05); }
+    10% { transform: translate(-1px, -2px) rotate(-2deg); }
+    20% { transform: translate(-3px, 0px) rotate(3deg); }
+    30% { transform: translate(0px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(2px, 1px) rotate(-2deg); }
+    80% { transform: translate(-1px, -1px) rotate(4deg); }
+    90% { transform: translate(2px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg) scale(1.05); }
+}
+
+/* 💸 বাজি ধরার প্রধান ৬টি ঐতিহ্যবাহী নিয়ন প্রতীক বোর্ড গ্রিড চ্যাম */
+.betting-board {
     position: relative;
     z-index: 5;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    padding: 5px 12px;
-    margin-top: 5px;
+    gap: 10px;
+    padding: 5px 15px;
+    max-width: 450px;
+    margin: 0 auto;
+    width: calc(100% - 30px);
 }
 
 .bet-board-btn {
-    background: linear-gradient(180deg, #11141e 0%, #0a0d14 100%);
-    border: 2px solid #1f2536;
-    border-radius: 12px;
-    padding: 10px 2px;
+    background: linear-gradient(180deg, #151d30 0%, #0d1321 100%);
+    border: 2px solid #222d44;
+    border-radius: 14px;
+    padding: 12px 2px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -101,60 +133,31 @@ body::before {
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.spot-icon {
-    width: 32px;
-    height: 32px;
+.board-icon-mini {
+    width: 28px;
+    height: 28px;
     object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
 }
 
 .board-label {
     font-size: 10px;
-    font-weight: 800;
-    color: #cbd5e1;
+    font-weight: 900;
+    color: #38bdf8;
     text-transform: uppercase;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
 }
 
-/* 🎯 ক্লিকেবল একটিভ নিয়ন গ্লো ইফেক্ট লক ভাই ভাই */
+/* 🎯 যখন বাটনটি সিলেক্ট (Active) হবে—তখন এই নিয়াল গোল্ডেন গ্লো জ্বলবে ওস্তাদ! */
 .bet-board-btn.active-side-bet {
-    border-color: #ffaa00;
-    background: linear-gradient(180deg, #221c10 0%, #100d07 100%);
-    box-shadow: 0 0 15px rgba(255, 170, 0, 0.35);
+    border-color: #ffaa00 !important;
+    background: linear-gradient(180deg, #2a2113 0%, #151007 100%) !important;
+    box-shadow: 0 0 15px rgba(255, 170, 0, 0.4) !important;
 }
 
 .bet-board-btn.active-side-bet .board-label {
-    color: #ffaa00;
-}
-
-/* 🎲 ৩ডি রিয়েল ঘূর্ণায়মান মোশন ব্লার ডাইস অ্যানিমেশন নোড */
-.dice-shake-loop-node {
-    width: 100%;
-    height: 100%;
-    background: url('dice-blank.png') no-repeat center center/cover;
-    animation: diceSpinLoop 0.15s infinite linear;
-}
-
-@keyframes diceSpinLoop {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* 🃏 কার্ড বা প্রতীক ড্রপ এনিমেশন নোড */
-.card-deal-animation-node {
-    animation: dealIn 0.2s forwards cubic-bezier(0.18, 0.89, 0.32, 1.28);
-    transform: scale(0);
-}
-
-@keyframes dealIn {
-    to { transform: scale(1); }
-}
-
-/* 🃏 ডিফল্ট উল্টানো ফাঁকা ছক্কার ব্যাকগ্রাউন্ড ডিজাইন */
-.dice-blank-default {
-    width: 60%;
-    height: 60%;
-    background: url('dice-blank.png') no-repeat center center/contain;
-    opacity: 0.15;
+    color: #ffaa00 !important;
 }
 
 /* 📢 লাইভ মেসেজ স্ট্যাটাস বার */
@@ -162,17 +165,17 @@ body::before {
     position: relative;
     z-index: 5;
     text-align: center;
-    padding: 8px 12px;
-    margin: 8px 12px;
-    background: rgba(8, 10, 15, 0.6);
-    border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.03);
+    padding: 10px;
+    margin: 5px 15px;
+    background: rgba(9, 13, 23, 0.6);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.02);
 }
 
 #win-text-msg {
     font-size: 12px;
     font-weight: 700;
-    color: #38bdf8;
+    color: #ffaa00;
     letter-spacing: 0.3px;
 }
 
@@ -180,10 +183,10 @@ body::before {
 .footer-controls {
     position: relative;
     z-index: 10;
-    background: #080a0f;
-    border-top: 1px solid #1a1e2b;
+    background: #070a12;
+    border-top: 1px solid #161f33;
     padding: 12px 15px 25px 15px;
-    box-shadow: 0 -5px 20px rgba(0,0,0,0.6);
+    box-shadow: 0 -5px 25px rgba(0,0,0,0.7);
 }
 
 .play-section {
@@ -191,50 +194,50 @@ body::before {
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    max-width: 500px;
+    max-width: 450px;
     margin: 0 auto;
 }
 
 /* প্লাস-মাইনাস নেভিগেশন নব */
 .bet-btn-nav {
-    background: #11141e;
-    border: 1px solid #1f2536;
+    background: #12192c;
+    border: 1px solid #222f52;
     color: #ffaa00;
     font-size: 18px;
     font-weight: 800;
-    width: 38px;
-    height: 38px;
-    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* 🚀 মেইন অ্যাকশন বোতাম (DEAL কিলার গোল্ডেন গ্লো) */
+/* 🚀 মেইন ডিল অ্যাকশন বোতাম (ROLL কিলার গোল্ডেন গ্লো) */
 .play-btn {
     flex: 1;
     background: linear-gradient(180deg, #ffbb00 0%, #d48800 100%);
     color: #000000;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 900;
     border: none;
     padding: 12px 0;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 4px 10px rgba(212,136,0,0.3);
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(212,136,0,0.35);
     transition: all 0.15s ease;
 }
 
-.play-btn:active {
-    transform: scale(0.97);
+.play-btn:active, .bet-board-btn:active {
+    transform: scale(0.96);
 }
 
 .play-btn:disabled {
-    background: #151924 !important;
-    color: #40475c !important;
+    background: #151a26 !important;
+    color: #444e66 !important;
     box-shadow: none !important;
     cursor: not-allowed;
 }
@@ -246,31 +249,24 @@ body::before {
 }
 
 .icon-btn {
-    background: #11141e;
-    border: 1px solid #1f2536;
-    width: 38px;
-    height: 38px;
-    border-radius: 8px;
+    background: #12192c;
+    border: 1px solid #222f52;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #ffaa00;
+    font-weight: bold;
     transition: all 0.2s ease;
-}
-
-.icon-btn::before {
-    content: "🤖";
-    font-size: 15px;
 }
 
 .icon-btn.active {
     background: #ffaa00;
-    border-color: #ffbb00;
+    color: #000000;
     box-shadow: 0 0 10px rgba(255,170,0,0.4);
-}
-
-.icon-btn.active::before {
-    filter: brightness(0);
 }
 
 /* 💥 উইন-লস নিয়ন গ্লোয়িং বর্ডার অ্যানিমেশন বর্ম */
